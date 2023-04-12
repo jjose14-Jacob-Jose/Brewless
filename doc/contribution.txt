@@ -1,7 +1,8 @@
 Milestone 1 Contributions
 
 Jacob Jose
--
+- Reviewed the program design.
+- Participated in team discussion on language implementation.
 
 Michael Kangas
 -
