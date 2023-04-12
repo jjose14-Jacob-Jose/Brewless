@@ -1,0 +1,18 @@
+Milestone 1 Contributions
+
+Jacob Jose
+-
+
+Michael Kangas
+-
+
+Boan Li
+-
+
+Tahir Pervez
+-
+
+James Thayer
+- brainstormed and named programming language. Concluded on Brewless
+- Created and Edited Grammar rules for laguage
+- Began implementing/describing Design of language
