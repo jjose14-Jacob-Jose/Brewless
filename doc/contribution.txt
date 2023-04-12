@@ -9,7 +9,7 @@ Michael Kangas
 - Implemented/Described Design of language.
 
 Boan Li
--
+- Reviewed docs
 
 Tahir Pervez
 - Edited Grammar rules for laguage.
