@@ -1,49 +1,74 @@
 :- use_rendering(svgtree).
 
-program(t_prog(B)) --> ['{'], block(B), ['}'].
+prog(t_prog(B)) --> ['{'], block(B), ['}'].
 
-block(t_block(C,B)) --> command(C), [;], block(B).
-block(t_block(C)) --> command(C).
+block(t_block(C,B)) --> cmd(C), [;], block(B).
+block(t_block(C)) --> cmd(C).
 
-command(t_cmd(D)) --> declaration(D).
+cmd(t_cmd(D)) --> dec(D).
+cmd(t_cmd(A)) --> assign(A).
+cmd(t_cmd(C)) --> cond(C).
+cmd(t_cmd(F)) --> for(F).
+cmd(t_cmd(W)) --> while(W).
+cmd(t_cmd(T)) --> tern(T).
+cmd(t_cmd(P)) --> print(P).
 
-declaration(t_dec(T,I)) --> type(T), identifier(I).
-declaration(t_dec(T,I,E)) --> type(T), identifier(I), [=], expression(E).
-
-
-assignment().
-
-expression().
-multiplication().
-division().
-addition().
-subtraction().
+dec(t_dec(T,I)) --> type(T), ident(I).
+dec(t_dec(T,I,E)) --> type(T), ident(I), [=], expr(E).
 
 type(t_type(int)) --> [int].
 type(t_type(string)) --> ["String"].
-type(t_type(boolean)) --> [boolean].
+type(t_type(bool)) --> [bool].
 
-integer().
-boolean().
-string().
+assign(t_assign(I,E)) --> ident(I), [=], expr(E).
 
-digit().
+expr(t_plus(A, B)) --> expr(A), [+], term(B).
+expr(t_minus(A, B)) --> expr(A), [-], term(B).
+expr(A) --> term(A).
+term(t_times(A, B)) --> term(A), [*], paren(B).
+term(t_divide(A, B)) --> term(A), [/], paren(B).
+term(A) --> paren(A).
+paren(t_paren(A)) --> ['('], expr(A), [')'].
+paren(A) --> value(A).
+value(A) --> ident(A) | int(A).
 
-% identifier(L) --> letter(L), identifier(_).
-identifier(L) --> letter(L).
+expr(t_expr(I)) --> ident(I).
+expr(t_expr(I)) --> int(I).
+expr(t_expr(S)) --> string(S).
+expr(t_expr(B)) --> bool(B).
 
-% FIXME: identifiers
-letter(a) --> [x].
-letter(b) --> [y].
-letter(c) --> [z].
+int(I) --> [I], {is_of_type(integer, I)}.
 
-conditional().
-ternary().
-for_loop().
-while_loop().
-loop_update().
-increment().
-decrement().
-print().
+%ident(A) --> letter(L), identifer(I), A = howtodothis.
+ident(L) --> letter(L).
 
-stub(_, _).
+letter(A) --> [A], {is_alpha(A)}.
+
+bool(t_bool(true)) --> [true].
+bool(t_bool(false)) --> [false].
+bool(t_bool(E1,E2)) --> expr(E1), ['=='], expr(E2).
+bool(t_bool(B)) --> [not], bool(B).
+bool(t_bool(B1,B2)) --> bool(B1), [and], bool(B2).
+bool(t_bool(B1,B2)) --> bool(B1), [or], bool(B2).
+
+string(t_str(I1, I2)) = [string], ident(I1), [=], ['"'], ident(I2), ['"'].
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
