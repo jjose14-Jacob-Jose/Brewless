@@ -13,6 +13,19 @@ LBRACE = "LBRACE"
 RBRACE = "RBRACE"
 COMMENT = "COMMENT"
 
+class Error:
+    def __init__(self, error_name, details):
+        self.error_name = error_name
+        self.details = details
+
+    def as_string(self):
+        result = f'{self.error_name}: {self.details}'
+        return result
+
+class IllegalCharError(Error):
+    def __init__(self, details):
+        super().__init__('Illegal Character', details)
+
 def lex(expression):
     tokens = []
     for match in token_regex.finditer(expression):
@@ -23,5 +36,7 @@ def lex(expression):
             tokens.append((INT, int(token_value)))
         elif token_type != COMMENT:
             tokens.append((token_type, token_value))
-    
+        else:
+            error = IllegalCharError(f"Invalid character: '{token_value}'")
+            raise error
     return tokens
