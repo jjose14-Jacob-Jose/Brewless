@@ -63,6 +63,10 @@ bool(t_bool(E1,E2)) --> expr(E1), ['=='], expr(E2).
 bool(t_bool(B)) --> [not], bool(B).
 bool(t_bool(B1,B2)) --> bool(B1), [and], bool(B2).
 bool(t_bool(B1,B2)) --> bool(B1), [or], bool(B2).
+bool(t_ident(I1,I2)) --> ident(I1), [<], int(I2).
+bool(t_ident(I1,I2)) --> ident(I1), [<=], int(I2).
+bool(t_ident(I1,I2)) --> ident(I1), [>], int(I2).
+bool(t_ident(I1,I2)) --> ident(I1), [>=], int(I2).
 
 string(t_str(I1, I2)) --> ["string"], ident(I1), [=], ['"'], ident(I2), ['"'].
 
