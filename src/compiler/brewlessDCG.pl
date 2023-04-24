@@ -1,6 +1,7 @@
 :- use_rendering(svgtree).
+:- table expr/3, term/3, bool/3.
 
-prog(t_prog(B)) --> ['{'], block(B), ['}'].
+program(t_prog(B)) --> ['{'], block(B), [;], ['}'].
 
 block(t_block(C,B)) --> cmd(C), [;], block(B).
 block(C) --> cmd(C).
@@ -17,7 +18,7 @@ dec(t_dec(T,I)) --> type(T), ident(I).
 dec(t_dec(T,A)) --> type(T), assign(A).
 
 type(t_type(int)) --> [int].
-type(t_type(string)) --> [string].
+type(t_type(string)) --> ['String'].
 type(t_type(bool)) --> [bool].
 
 assign(t_assign(I,E)) --> ident(I), [=], expr(E).
@@ -36,13 +37,25 @@ paren(t_paren(A)) --> ['('], expr(A), [')'].
 paren(A) --> value(A).
 value(A) --> ident(A) | int(A).
 
-
 int(I) --> [I], {is_of_type(integer, I)}.
 
 %ident(A) --> letter(L), identifer(I), A = howtodothis.
 ident(L) --> letter(L).
 
-letter(A) --> [A], {is_alpha(A)}.
+letter(A) -->
+    ['a'], {A='a'} | ['A'], {A='A'} | ['b'], {A='b'} | ['B'], {A='B'} |
+    ['c'], {A='c'} | ['C'], {A='C'} | ['d'], {A='d'} | ['D'], {A='D'} | 
+    ['e'], {A='e'} | ['E'], {A='E'} | ['f'], {A='f'} | ['F'], {A='F'} | 
+    ['g'], {A='g'} | ['G'], {A='G'} | ['h'], {A='h'} | ['H'], {A='H'} |
+    ['i'], {A='i'} | ['I'], {A='I'} | ['j'], {A='j'} | ['J'], {A='J'} | 
+    ['k'], {A='k'} | ['K'], {A='K'} | ['l'], {A='l'} | ['L'], {A='L'} | 
+    ['m'], {A='m'} | ['M'], {A='M'} | ['n'], {A='n'} | ['N'], {A='N'} |
+    ['o'], {A='o'} | ['O'], {A='O'} | ['p'], {A='p'} | ['P'], {A='P'} |
+    ['q'], {A='q'} | ['Q'], {A='Q'} | ['r'], {A='r'} | ['R'], {A='R'} |
+    ['s'], {A='s'} | ['S'], {A='S'} | ['t'], {A='t'} | ['T'], {A='T'} |
+    ['u'], {A='u'} | ['U'], {A='U'} | ['v'], {A='v'} | ['V'], {A='V'} |
+    ['w'], {A='w'} | ['W'], {A='W'} | ['x'], {A='x'} | ['X'], {A='X'} | 
+    ['y'], {A='y'} | ['Y'], {A='Y'} | ['z'], {A='z'} | ['Z'], {A='Z'}.
 
 bool(t_bool(true)) --> [true].
 bool(t_bool(false)) --> [false].
@@ -66,10 +79,10 @@ tern(t_tern(B,E1,E2)) --> bool(B), ['?'], expr(E1), [':'], expr(E2).
 for(t_forstd(A,B1,L,B2)) --> 
     [for], ['('], assign(A), [;], bool(B1), [;], loop(L), [')'],
     	['{'], block(B2), ['}'].
-
+/*
 for(t_forrng(I,R,B)) --> 
     [for], ['('], ident(I), [in], range(R), [')'] ['{'], block(B), ['}'].                  
-
+*/
 while(t_while(B1,B2)) --> [while], ['('], bool(B1), [')'], ['{'], block(B2), ['}'].
 while(t_dowhile(B1,B2)) --> [do], ['{'], block(B1), ['}'], [while], ['('], bool(B2), [')'].
     
