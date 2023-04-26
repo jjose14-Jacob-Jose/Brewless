@@ -1,0 +1,9 @@
+Setup Development Environment by:
+sudo apt install python3.10-venv
+python3 -m venv pyswip_env 
+sudo apt install swi-prolog
+sudo apt install python3-pip
+pip install git+https://github.com/yuce/pyswip@master#egg=pyswip
+export PATH=$PATH:$HOME/.local/bin
+
+https://github.com/yuce/pyswip
