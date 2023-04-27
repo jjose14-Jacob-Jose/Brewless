@@ -1,4 +1,4 @@
-Dev Environment Setup:
+Dev Environment Setup for Python to Prolog:
   sudo apt install python3.10-venv
   python3 -m venv pyswip_env 
   sudo apt install swi-prolog
@@ -6,6 +6,10 @@ Dev Environment Setup:
   pip install pyswip
 
 
-export PATH=$PATH:$HOME/.local/bin
+Executing Prolog file from Ubuntu Terminal:
+Format:
+python3 brewlessInterpreter.py <path_to_prolog_file.pl> <prolog_query> <output_variable_name>
 
-https://github.com/yuce/pyswip
+Example
+python3 brewlessInterpreter.py assignSemantics.pl "execute_program([begin, var, z, ; , var, x, ;, z, :=, x, end, .], Z)." "Z"
+
