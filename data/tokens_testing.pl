@@ -11,6 +11,6 @@
 ['{',int, a, =, 3,;,do, '{',a, =, a, +, 1,;,'}', while, '(', a, '>=', 5, ')', ;,'}']
 ['{',int, a, =, 3,;,int, b, =, 2,;,a, ==, b, ?, a, =, a, +, b, :, a, =, b,;,'}']
 
-['{','String',a,=,'"',a,'"',;,'}']
+['{','String',"apple",=,'"',"apple",'"',;,'}']
 ['{',boolean,a,=,true,or,false;,'}']
 ['{',boolean,a,=,true,and,false;,'}']

@@ -39,9 +39,8 @@ value(A) --> ident(A) | int(A).
 
 int(I) --> [I], {is_of_type(integer, I)}.
 
-%ident(A) --> letter(L), identifer(I), A = howtodothis.
-ident(L) --> letter(L).
-
+ident(I) --> [I], {is_of_type(string, I)}.
+/*
 letter(A) -->
     ['a'], {A='a'} | ['A'], {A='A'} | ['b'], {A='b'} | ['B'], {A='B'} |
     ['c'], {A='c'} | ['C'], {A='C'} | ['d'], {A='d'} | ['D'], {A='D'} | 
@@ -56,17 +55,17 @@ letter(A) -->
     ['u'], {A='u'} | ['U'], {A='U'} | ['v'], {A='v'} | ['V'], {A='V'} |
     ['w'], {A='w'} | ['W'], {A='W'} | ['x'], {A='x'} | ['X'], {A='X'} | 
     ['y'], {A='y'} | ['Y'], {A='Y'} | ['z'], {A='z'} | ['Z'], {A='Z'}.
-
+*/
 bool(t_bool(true)) --> [true].
 bool(t_bool(false)) --> [false].
 bool(t_bool(E1,E2)) --> expr(E1), ['=='], expr(E2).
 bool(t_bool(B)) --> [not], bool(B).
 bool(t_bool(B1,B2)) --> bool(B1), [and], bool(B2).
 bool(t_bool(B1,B2)) --> bool(B1), [or], bool(B2).
-bool(t_ident(I1,I2)) --> ident(I1), [<], int(I2).
-bool(t_ident(I1,I2)) --> ident(I1), [<=], int(I2).
-bool(t_ident(I1,I2)) --> ident(I1), [>], int(I2).
-bool(t_ident(I1,I2)) --> ident(I1), [>=], int(I2).
+bool(t_bool(I1,I2)) --> ident(I1), [<], int(I2).
+bool(t_bool(I1,I2)) --> ident(I1), [<=], int(I2).
+bool(t_bool(I1,I2)) --> ident(I1), [>], int(I2).
+bool(t_bool(I1,I2)) --> ident(I1), [>=], int(I2).
 
 string(t_str(I1, I2)) --> ["string"], ident(I1), [=], ['"'], ident(I2), ['"'].
 
