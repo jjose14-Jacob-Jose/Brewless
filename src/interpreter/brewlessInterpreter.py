@@ -39,20 +39,9 @@ from pyswip import Prolog
 prolog = Prolog()
 prolog.consult("assignSemantics.pl")
 input_Program= "[begin, var, z, ; , var, x, ;, z, :=, x, end, .]"
-queryString = "program( P, "+ input_Program + ", [])."
+queryString = "execute_program( " + input_Program  + ", Z)."
 print("queryString: ", queryString)
 resultOne = prolog.query(queryString)
-resultOne.closeQuery()
-
 for result in resultOne:
-    print(result["P"])
+    print(result["Z"])
 
-    parseTree = result["P"]
-    print("parsetree: " + parseTree)
-    x = "2"
-    y = "3"
-    queryTwo = "program_eval("+parseTree+", " + x + ", " + y + ", Z)."
-    print("queryTwo: ", queryTwo)
-
-    for resultTwo in prolog.query(queryTwo):
-            print(result["Z"])

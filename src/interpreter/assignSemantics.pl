@@ -270,3 +270,42 @@
 
     eval_true(true).
     eval_false(false).
+
+% Main class
+
+execute_program(ListOfTokens, Z) :-
+    program(Tree, ListOfTokens, []),
+    program_eval(Tree, 2, 3, Z).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
