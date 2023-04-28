@@ -1,10 +1,11 @@
 import re
 
-token_regex = re.compile(r"\s*(?P<INT>\d+)|(?P<PRINT>print)|(?P<INCREMENT>\++)|(?P<DECREMENT>--)|\b(?P<DATATYPE>int)\b|(?P<PLUS>\+)|(?P<MINUS>-)|(?P<MULTIPLY>\*)|(?P<DIVIDE>/)|(?P<LPAREN>\()|(?P<RPAREN>\))|(?P<LBRACE>{)|(?P<RBRACE>})|(?P<COMMENT>#.*(\n|$))|(?P<IF>if)|(?P<ELSE>else)|(?P<LESS>\<)|(?P<GREATER>\>)|(?P<WHILE>while)|(?P<DO>do)|(?P<FOR>for)|\b(?P<IN>in)\b|(?P<RANGE>range)|(?P<STRING>\"[^\"]*\")|(?P<TRUE>true)|(?P<FALSE>false)|(?P<EQ>==)|(?P<AND>and)|(?P<OR>or)|(?P<NOT>not)|(?P<TERNARY>\?)|(?P<COLON>:)|(?P<ASSIGN>=)|(?P<VARIABLE>[a-zA-Z_][a-zA-Z0-9_]*)")
+token_regex = re.compile(r"\s*(?P<INT>\d+)|(?P<PRINT>print)|(?P<INCREMENT>\++)|(?P<DECREMENT>--)|\b(?P<TYPESTRING>String)\b|\b(?P<TYPEINT>int)\b|(?P<PLUS>\+)|(?P<MINUS>-)|(?P<MULTIPLY>\*)|(?P<DIVIDE>/)|(?P<LPAREN>\()|(?P<RPAREN>\))|(?P<LBRACE>{)|(?P<RBRACE>})|(?P<COMMENT>#.*(\n|$))|(?P<IF>if)|(?P<ELSE>else)|(?P<LESS>\<)|(?P<GREATER>\>)|(?P<WHILE>while)|(?P<DO>do)|(?P<FOR>for)|\b(?P<IN>in)\b|(?P<RANGE>range)|(?P<STRING>\"[^\"]*\")|(?P<TRUE>true)|(?P<FALSE>false)|(?P<EQ>==)|(?P<AND>and)|(?P<OR>or)|(?P<NOT>not)|(?P<TERNARY>\?)|(?P<COLON>:)|(?P<ASSIGN>=)|(?P<VARIABLE>[a-zA-Z_][a-zA-Z0-9_]*)")
 
 INT = "INT"
 PRINT = "PRINT"
-DATATYPE = "DATATYPE"
+TYPEINT = "TYPEINT"
+TYPESTRING = "TYPESTRING"
 INCREMENT = "INCREMENT"
 DECREMENT = "DECREMENT"
 PLUS = "PLUS"
@@ -59,10 +60,12 @@ def lex(expression):
         if token_type == INT:
             tokens.append((int(token_value)))
         elif token_type == STRING:
-            tokens.append((token_value))
+            tokens.append(((token_value)))
         elif token_type == PRINT:
             tokens.append(('print'))
-        elif token_type == DATATYPE:
+        elif token_type == TYPEINT:
+            tokens.append((token_value))
+        elif token_type == TYPESTRING:
             tokens.append((token_value))
         elif token_type == TRUE:
             tokens.append((True))
@@ -79,7 +82,7 @@ def lex(expression):
         elif token_type == ASSIGN:
             tokens.append((token_value))
         elif token_type == VARIABLE:
-            tokens.append(('"' + token_value + '"'))
+            tokens.append(('"' + (token_value) + '"'))
         elif token_type != COMMENT:
             tokens.append((token_value))
         else:
