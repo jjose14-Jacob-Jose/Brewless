@@ -4,12 +4,46 @@
 test(cmd,['{',int,"a",;,'}']).
 test(cmdlst,['{',int,"a",;,int,"b",=,3,;,'}']).
 test(assign,['{',int,"a",;,"a",=,3,;,'}']).
-test(if,['{',int, "a",;,if, '(',true,')', '{',"a", =, 5,;,'}',;,'}']).
-test(if_else,['{',int, "a",;,if, '(',false,')', '{',"a", =, 5,;,'}',else,'{',"a",=,3,;,'}',;,'}']).
-test(for_inc,['{', for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", ++, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
-test(for_dec,['{', for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", --, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
+test(if,['{',
+            int, "a",;,
+            if, '(',true,')', '{',"a", =, 5,;,'}',;,
+          '}']).
+test(if_else,['{',
+                 int, "a",;,
+                 if, '(',false,')', '{',"a", =, 5,;,'}',
+                 else,'{',"a",=,3,;,'}',;,'}']).
+test(for_inc,['{', 
+                 for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", ++, ')', 
+                 '{', print, '(', "i", ')', ;, '}', ;, 
+             '}']).
+test(for_dec,['{', 
+                 for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", --, ')', 
+                 '{', print, '(', "i", ')', ;, '}', ;, 
+             '}']).
+test(for_assign,['{', 
+                  for, '(', int, "i", =, 10,;, "i", >, 0,;, "i", =, "i",-,2, ')', 
+                  '{', print, '(', "i", ')', ;, '}', ;,
+                '}']).
+test(for_rng,['{',
+                 int, "i", =, 3,;,
+                 for, '(', "i", in, 'Range', '(', 2, ',', 7, ')', ')',
+                 '{', print, '(', "i", ')', ;, '}', ;,
+               '}']).
+test(while,['{',
+                int, "start", =, 1,;,
+                int, "end", =, 100,;,
+                while, '(', "start", <=, "end", ')', '{',
+                    print, '(', "start", ')',;,
+                    "start", =, "start", *, 2,;,
+                '}',;,
+            '}']).
+/*test(do_while,['{',
+                  do, '{',
+                      print, '(', '"',",bigger,",'"', ')',;,
+                  '}', while, '(', 3, >, 5, ')',;,
+              '}']).
+*/
 
-test(for_assign,['{', for, '(', int, "i", =, 10,;, "i", >, 0,;, "i", =, "i",-,2, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
 
 program(t_prog(B)) --> ['{'], block(B), ['}'].
 
@@ -93,10 +127,11 @@ tern(t_tern(B,E1,E2)) --> bool(B), ['?'], expr(E1), [':'], expr(E2).
 for(t_forstd(A,B1,L,B2)) --> 
     [for], ['('], dec(A), [;], bool(B1), [;], loop(L), [')'],
     	['{'], block(B2), ['}'].
-/*
+
 for(t_forrng(I,R,B)) --> 
-    [for], ['('], ident(I), [in], range(R), [')'] ['{'], block(B), ['}'].                  
-*/
+    [for], ['('], ident(I), [in], range(R), [')'],
+    	['{'], block(B), ['}'].                  
+
 while(t_while(B1,B2)) --> [while], ['('], bool(B1), [')'], ['{'], block(B2), ['}'].
 while(t_dowhile(B1,B2)) --> [do], ['{'], block(B1), ['}'], [while], ['('], bool(B2), [')'].
     
