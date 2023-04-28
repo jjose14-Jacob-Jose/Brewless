@@ -37,13 +37,20 @@ test(while,['{',
                     "start", =, "start", *, 2,;,
                 '}',;,
             '}']).
-/*test(do_while,['{',
-                  do, '{',
-                      print, '(', '"',",bigger,",'"', ')',;,
-                  '}', while, '(', 3, >, 5, ')',;,
-              '}']).
-*/
 
+test(do_while, ['{',
+                    int, "count", =, 7,;,
+                    do, '{',
+                        print, '(', "count", ')',;,
+                        "count", =, "count", +, 2,;,
+                    '}', while, '(', "count", <, 5, ')',;,
+                    print, '(', "count", ')',;,
+                '}']).
+
+test(tern, ['{',
+                boolean, "base", =, true,;,
+                '(', "base", ?, print, '(', "base", ')', :, print, '(', not, "base", ')',;, ')',
+            '}']).
 
 program(t_prog(B)) --> ['{'], block(B), ['}'].
 
@@ -64,14 +71,10 @@ dec(t_dec_ass(T,A)) --> type(T), assign(A).
 
 type(t_type_int(int)) --> [int].
 type(t_type_string(string)) --> ['String'].
-type(t_type_bool(bool)) --> [bool].
+type(t_type_bool(bool)) --> [boolean].
 
 assign(t_assign(I,E)) --> ident(I), [=], expr(E).
 
-expr(I) --> ident(I).
-expr(I) --> int(I).
-expr(S) --> string(S).
-expr(B) --> bool(B).
 expr(t_plus(A, B)) --> expr(A), [+], term(B).
 expr(t_minus(A, B)) --> expr(A), [-], term(B).
 expr(A) --> term(A).
@@ -80,7 +83,7 @@ term(t_divide(A, B)) --> term(A), [/], paren(B).
 term(A) --> paren(A).
 paren(t_paren(A)) --> ['('], expr(A), [')'].
 paren(A) --> value(A).
-value(A) --> ident(A) | int(A).
+value(A) --> ident(A) | int(A) | string(A) | bool(A).
 
 int(I) --> [I], {is_of_type(integer, I)}.
 
@@ -103,14 +106,15 @@ letter(A) -->
 */
 bool(t_bool_true(true)) --> [true].
 bool(t_bool_false(false)) --> [false].
+bool(t_bool_ident(E)) --> expr(E).
 bool(t_bool_comp(E1,E2)) --> expr(E1), ['=='], expr(E2).
 bool(t_bool_not(B)) --> [not], bool(B).
 bool(t_bool_and(B1,B2)) --> bool(B1), [and], bool(B2).
 bool(t_bool_or(B1,B2)) --> bool(B1), [or], bool(B2).
-bool(t_bool_lt(I1,I2)) --> ident(I1), [<], int(I2).
-bool(t_bool_lteq(I1,I2)) --> ident(I1), [<=], int(I2).
-bool(t_bool_gt(I1,I2)) --> ident(I1), [>], int(I2).
-bool(t_bool_gteq(I1,I2)) --> ident(I1), [>=], int(I2).
+bool(t_bool_lt(I,E)) --> ident(I), [<], expr(E).
+bool(t_bool_lte(I,E)) --> ident(I), [<=], expr(E).
+bool(t_bool_gt(I,E)) --> ident(I), [>], expr(E).
+bool(t_bool_gte(I,E)) --> ident(I), [>=], expr(E).
 
 string(t_str(I1, I2)) --> ["string"], ident(I1), [=], ['"'], ident(I2), ['"'].
 
@@ -122,7 +126,7 @@ cond(t_ife(B1,B2,B3)) -->
     ['{'], block(B2), ['}'], 
     [else], ['{'], block(B3), ['}'].
 
-tern(t_tern(B,A1,A2)) --> bool(B), ['?'], assign(A1), [':'], assign(A2).
+tern(t_tern(B,A1,A2)) --> ['('], bool(B), ['?'], assign(A1), [':'], assign(A2), [')'].
 
 for(t_forstd(A,B1,L,B2)) --> 
     [for], ['('], dec(A), [;], bool(B1), [;], loop(L), [')'],
@@ -145,6 +149,6 @@ incr(I) --> ['++'], ident(I).
 decr(I) --> ident(I), ['--'].
 decr(I) --> ['--'], ident(I).
 
-print(t_print(I)) --> [print], ['('], ident(I), [')'].
+print(t_print(E)) --> [print], ['('], expr(E), [')'].
 
 range(t_range(I1,I2)) --> ['Range'], ['('], int(I1), [','], int(I2), [')'].
