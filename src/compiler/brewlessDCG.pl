@@ -1,28 +1,29 @@
 :- use_rendering(svgtree).
 :- table expr/3, term/3, bool/3.
 
-test(1,['{',int,"a",;,'}']).
-test(2,['{',int,"a",;,int,"b",=,3,;,'}']).
-test(3,['{',int,"a",;,"a",=,3,;,'}']).
-test(4,['{',int, "a",;,if, '(',true,')', '{',"a", =, 5,;,'}',;,'}']).
-test(5,['{',int, "a",;,if, '(',false,')', '{',"a", =, 5,;,'}',else,'{',"a",=,3,;,'}',;,'}']).
-test(6,['{',for,'(',int,"i",=,0,;,"i",<,10,;,"i",++,')','{',print,'(',"i",')',;,'}',;,'}']).
-test(7,['{',for,'(',int,"i",=,10,;,"i",>,0,;,"i",--,')','{',int,"a",=,"i",;,'}',;,'}']).
-test(8,['{',for,'(',int,"i",=,0,;,"i",<,10,;,"i",=,"i",+,2,')','{',int,"a",=,"i",;,'}',;,'}']).
-test(9,['{',for, '(',"i", in, 'Range','(',3,',',7,')',')', '{',int, "a", =, "i",;,'}',;,'}']).
-test(10,['{',int, "a", =, 3,;,while,'(',"a", '<', 5,')', '{',"a", =, "a", +, 1,;,'}',;,'}']).
-test(11,['{',int, "a", =, 3,;,do, '{',"a", =, "a", +, 1,;,'}', while, '(', "a", '>=', 5, ')', ;,'}']).
-test(12,['{',int, "a", =, 3,;,int, "b", =, 2,;,"a", ==, "b", ?, "a", =, "a", +, "b", :, "a", =, "b",;,'}']).
-test(13,['{','String',"apple",=,'"',"apple",'"',;,'}']).
-test(14,['{',boolean,"a",=,true,or,false,;,'}']).
-test(15,['{',boolean,"a",=,true,and,false,;,'}']).
+test(cmd,['{',int,"a",;,'}']).
+test(cmdlst,['{',int,"a",;,int,"b",=,3,;,'}']).
+test(assign,['{',int,"a",;,"a",=,3,;,'}']).
+test(if,['{',int, "a",;,if, '(',true,')', '{',"a", =, 5,;,'}',;,'}']).
+test(if_else,['{',int, "a",;,if, '(',false,')', '{',"a", =, 5,;,'}',else,'{',"a",=,3,;,'}',;,'}']).
+test(for_inc,['{', for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", ++, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
+test(for_dec,['{', for, '(', int, "i", =, 0,;, "i", <, 10,;, "i", --, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
+
+test(for_assign,['{', for, '(', int, "i", =, 10,;, "i", >, 0,;, "i", =, "i",-,2, ')', '{', print, '(', "i", ')', ;, '}', ;, '}']).
 
 program(t_prog(B)) --> ['{'], block(B), ['}'].
 
 block(t_block(C,B)) --> cmd(C), [;], block(B).
 block(C) --> cmd(C), [;].
 
-cmd(X) --> dec(X) | assign(X) | cond(X) | for(X) | while(X) | tern(X) | print(X).
+cmd(X) --> 
+    dec(X) | 
+    assign(X) | 
+    cond(X) | 
+    for(X) | 
+    while(X) | 
+    tern(X) | 
+    print(X).
 
 dec(t_dec(T,I)) --> type(T), ident(I).
 dec(t_dec_ass(T,A)) --> type(T), assign(A).
@@ -90,7 +91,7 @@ cond(t_ife(B1,B2,B3)) -->
 tern(t_tern(B,E1,E2)) --> bool(B), ['?'], expr(E1), [':'], expr(E2).
 
 for(t_forstd(A,B1,L,B2)) --> 
-    [for], ['('], assign(A), [;], bool(B1), [;], loop(L), [')'],
+    [for], ['('], dec(A), [;], bool(B1), [;], loop(L), [')'],
     	['{'], block(B2), ['}'].
 /*
 for(t_forrng(I,R,B)) --> 
@@ -100,8 +101,8 @@ while(t_while(B1,B2)) --> [while], ['('], bool(B1), [')'], ['{'], block(B2), ['}
 while(t_dowhile(B1,B2)) --> [do], ['{'], block(B1), ['}'], [while], ['('], bool(B2), [')'].
     
 loop(t_loop(A)) --> assign(A).
-loop(t_incr(I)) --> incr(I).
-loop(t_decr(D)) --> decr(D).
+loop(t_inc(I)) --> incr(I).
+loop(t_dec(D)) --> decr(D).
 
 incr(I) --> ident(I), ['++'].
 incr(I) --> ['++'], ident(I).
