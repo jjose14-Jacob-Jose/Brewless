@@ -2,7 +2,6 @@
 	int a;
 	int b = 3;
 	a = 5;
-	for (int i = 0; i < a; i++) {
-		print(b * i);
-	};
+	int res = a + b;
+	print(res)
 }
