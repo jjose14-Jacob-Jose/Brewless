@@ -48,8 +48,8 @@ test(do_while, ['{',
                 '}']).
 
 test(tern, ['{',
-                boolean, "base", =, true,;,
-                '(', "base", ?, print, '(', "base", ')', :, print, '(', not, "base", ')',;, ')',
+                int, "a", =, 2,
+                '(', "a", >, 3, ?, print, '(', true, ')', :, print, '(', false, ')',')',;,
             '}']).
 
 program(t_prog(B)) --> ['{'], block(B), ['}'].
@@ -66,8 +66,8 @@ cmd(X) -->
     tern(X) | 
     print(X).
 
-dec(t_dec(T,I)) --> type(T), ident(I).
 dec(t_dec_ass(T,A)) --> type(T), assign(A).
+dec(t_dec(T,I)) --> type(T), ident(I).
 
 type(t_type_int(int)) --> [int].
 type(t_type_string(string)) --> ['String'].

@@ -55,6 +55,6 @@
 '}']
 
 ['{',
-	boolean, "base", =, true,;,
-	'(', "base", ?, print, '(', "base", ')', :, print, '(', not, "base", ')',;, ')',
+	int, "a", =, 2,
+	'(', "a", >, 3, ?, print, '(', true, ')', :, print, '(', false, ')',')',;,
 '}']
