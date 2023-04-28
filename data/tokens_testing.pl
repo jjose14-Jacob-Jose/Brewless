@@ -46,7 +46,15 @@
 '}']
 
 ['{',
+	int, "count", =, 7,;,
 	do, '{',
-		print, '(', '"',",bigger,",'"', ')',;,
-	'}', while, '(', 3, >, 5, ')',;,
+		print, '(', "count", ')',;,
+		"count", =, "count", +, 2,;,
+	'}', while, '(', "count", <, 5, ')',;,
+	print, '(', "count", ')',;,
+'}']
+
+['{',
+	boolean, "base", =, true,;,
+	'(', "base", ?, print, '(', "base", ')', :, print, '(', not, "base", ')',;, ')',
 '}']

@@ -122,7 +122,7 @@ cond(t_ife(B1,B2,B3)) -->
     ['{'], block(B2), ['}'], 
     [else], ['{'], block(B3), ['}'].
 
-tern(t_tern(B,E1,E2)) --> bool(B), ['?'], expr(E1), [':'], expr(E2).
+tern(t_tern(B,A1,A2)) --> bool(B), ['?'], assign(A1), [':'], assign(A2).
 
 for(t_forstd(A,B1,L,B2)) --> 
     [for], ['('], dec(A), [;], bool(B1), [;], loop(L), [')'],
