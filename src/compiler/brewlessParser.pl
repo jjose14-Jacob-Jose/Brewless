@@ -26,7 +26,7 @@ expression_eval(I, _, _, Result) :- integer_eval(I, Result).
 expression_eval(S, _, _, Result) :- string_eval(S, Result).
 expression_eval(B, Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, Result).
 expression_eval(t_plus(A,B), Env, OutEnv, Result) :- expression_eval(A, Env, OutEnv, Temp1), term_eval(B, Env, OutEnv, Temp2), Result is Temp1 + Temp2.
-expression_eval(t_minus(A,B), Env, OutEnv, Result) :- expression_eval(A, Env, OutEnv, Temp1), term_eval(B, Env, OutEnv, Temp2) Result is Temp1 - Temp2.
+expression_eval(t_minus(A,B), Env, OutEnv, Result) :- expression_eval(A, Env, OutEnv, Temp1), term_eval(B, Env, OutEnv, Temp2), Result is Temp1 - Temp2.
 expression_eval(A, Env, OutEnv, Result) :- term_eval(A, Env, OutEnv, Result).
 
 term_eval(t_times(A, B), Env, OutEnv, Result) :- term_eval(A, Env, OutEnv, Temp1), paren_eval(B, Env, OutEnv, Temp2), Result is Temp1 * Temp2.
@@ -77,7 +77,7 @@ bool_check(false , or , false , false).
 %String Should be String --> "identifier", not a whole assign statement. Need to fix grammars
 string_eval(t_str('"', S, '"'), Result) :- identifier_eval(S, Result).
 
-conditional_eval(t_if(B1,B2), Env, OutEnv) :- bool_eval(B1, Env, OutEnv true), block_eval(B2, Env, OutEnv).
+conditional_eval(t_if(B1,B2), Env, OutEnv) :- bool_eval(B1, Env, OutEnv, true), block_eval(B2, Env, OutEnv).
 conditional_eval(t_ife(B1,B2,_) Env, OutEnv) :- bool_eval(B1, Env, OutEnv, true), block_eval(B2, Env, OutEnv).
 conditional_eval(t_ife(B1,_,B3) Env, OutEnv) :- bool_eval(B1, Env, OutEnv, false), block_eval(B3, Env, OutEnv).
 
@@ -96,8 +96,8 @@ for_eval(t_forstd(A,B1,L,B2), Env, OutEnv) :-
 
 %    for-loop, where boolean expression evaluates to 'false'.
 for_eval(t_forstd(A, B1, _, _), Env, OutEnv) :-
-    assign_eval(A, Env, Env1), b
-    ool_eval(B1, Env1, OutEnv, false).
+    assign_eval(A, Env, Env1),
+    bool_eval(B1, Env1, OutEnv, false).
 
 %  Helper predicate that does not evaluate the 'assignment' part of for-loop. Here boolean expression evaluates to 'true'.
 for_helper_eval(t_forstd(_, B1, L, B2), Env, OutEnv) :-
