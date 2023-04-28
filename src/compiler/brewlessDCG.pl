@@ -92,10 +92,11 @@ tern(t_tern(B,E1,E2)) --> bool(B), ['?'], expr(E1), [':'], expr(E2).
 for(t_forstd(A,B1,L,B2)) --> 
     [for], ['('], assign(A), [;], bool(B1), [;], loop(L), [')'],
     	['{'], block(B2), ['}'].
-/*
-for(t_forrng(I,R,B)) --> 
-    [for], ['('], ident(I), [in], range(R), [')'] ['{'], block(B), ['}'].                  
-*/
+
+for(t_forrng(Identifier, BoundLower, BoundUpper, Block)) -->
+    [for], ident(Identifier), [in], [range], ['('], type_eval(BoundLower), [','], type_eval(BoundUpper), [')'],
+     ['{'], block(B), ['}'].
+
 while(t_while(B1,B2)) --> [while], ['('], bool(B1), [')'], ['{'], block(B2), ['}'].
 while(t_dowhile(B1,B2)) --> [do], ['{'], block(B1), ['}'], [while], ['('], bool(B2), [')'].
     

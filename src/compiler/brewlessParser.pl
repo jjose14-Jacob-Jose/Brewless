@@ -87,14 +87,37 @@ tern_eval(t_tern(B,E1,E2), Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, fal
 
 %I don't know how we should go about for loops
 %    for-loop, where boolean expression evaluates to 'true'.
-for_eval(t_forstd(A,B1,L,B2), Env, OutEnv) :- assign_eval(A, Env, Env1), bool_eval(B1, Env1, Env2, true), block_eval(B2, Env2, Env3), loop_eval(L, Env3, Env4), for_helper_eval(t_forstd(A,B1,L,B2), Env4, OutEnv).
+for_eval(t_forstd(A,B1,L,B2), Env, OutEnv) :-
+    assign_eval(A, Env, Env1),
+    bool_eval(B1, Env1, Env2, true),
+    block_eval(B2, Env2, Env3),
+    loop_eval(L, Env3, Env4),
+    for_helper_eval(t_forstd(A,B1,L,B2), Env4, OutEnv).
+
 %    for-loop, where boolean expression evaluates to 'false'.
-for_eval(t_forstd(A, B1, _, _), Env, OutEnv) :- assign_eval(A, Env, Env1), bool_eval(B1, Env1, OutEnv, false).
+for_eval(t_forstd(A, B1, _, _), Env, OutEnv) :-
+    assign_eval(A, Env, Env1), b
+    ool_eval(B1, Env1, OutEnv, false).
 
 %  Helper predicate that does not evaluate the 'assignment' part of for-loop. Here boolean expression evaluates to 'true'.
-for_helper_eval(t_forstd(_, B1, L, B2), Env, OutEnv) :- bool_eval(B1, Env, Env2, true), block_eval(B2, Env2, Env3), loop_eval(L, Env3, Env4), for_helper_eval(t_forstd(A, B1, L, B2), Env4, OutEnv).
+for_helper_eval(t_forstd(_, B1, L, B2), Env, OutEnv) :-
+    bool_eval(B1, Env, Env2, true),
+    block_eval(B2, Env2, Env3),
+    loop_eval(L, Env3, Env4),
+    for_helper_eval(t_forstd(_, B1, L, B2), Env4, OutEnv).
+
 %  Helper predicate that does not evaluate the 'assignment' part of for-loop. Here boolean expression evaluates to 'false'.
-for_helper_eval(t_forstd(_, B1, _, _), Env, OutEnv) :- bool_eval(B1, Env, OutEnv, false).
+for_helper_eval(t_forstd(_, B1, _, _), Env, OutEnv) :-
+    bool_eval(B1, Env, OutEnv, false).
+
+%    Short hand for loop.
+%    for i in range(2, 5)
+for_eval(t_forrng(_, BoundLower, BoundUpper, Block), Env0, EnvFinal) :-
+    BoundLower <= BoundUpper,
+    block_eval(Block, Env0, Env1),
+    BoundLowerIncremented is BoundLower + 1,
+    for_eval(t_forrng(_, BoundLowerIncremented, BoundUpper, Block), Env1, EnvFinal).
+
 
 while_eval(t_while(B1, B2), Env, OutEnv) :- bool_eval(B1, Env, OutEnv, Bool), while_helper(Bool, B2, Env, OutEnv, B1).
 while_eval(t_dowhile(B1, B2), Env, OutEnv) :- bool_eval(B2, Env, OutEnv, Bool), dowhile_helper(Bool, B1, Env, OutEnv, B2).
