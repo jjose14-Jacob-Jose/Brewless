@@ -39,7 +39,7 @@ paren_eval(A, Env, OutEnv, Result) :- value_eval(A, Env, OutEnv, Result).
 value_eval(A, Env, _, Result) :- identifier_eval(A, Temp), lookup(_,Temp,Result,Env).
 value_eval(A, _, _, Result) :- integer_eval(A, Result).
 
-integer_eval(I, Result) :- is_of_type(integer, I), Result is I.
+integer_eval(I, Result) :- atom_number(I, Result).
 
 identifier_eval(I, Result) :- atom(I), Result = I.
 
