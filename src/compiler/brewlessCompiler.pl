@@ -245,4 +245,6 @@ update(Type, Identifier, Number, [H | T], [H | Env]):- update(Type, Identifier, 
 compile_and_run_brewless(ListOfTokens, Out_Env) :-
     program(Parse_Tree, ListOfTokens, []),
     program_eval(Parse_Tree, Out_Env),
-    write(Out_Env).
+    nl,
+    write(Out_Env),
+    nl.
