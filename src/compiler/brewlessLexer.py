@@ -76,9 +76,9 @@ def lex(expression):
         elif token_type == TYPESTRING:
             tokens.append((token_value))
         elif token_type == TRUE:
-            tokens.append((True))
+            tokens.append(('true'))
         elif token_type == FALSE:
-            tokens.append((False))
+            tokens.append(('false'))
         elif token_type == TERNARY:
             tokens.append(('?'))
         elif token_type == COLON:
