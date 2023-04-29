@@ -23,7 +23,7 @@ def runBrewless():
         # Create a Prolog predicate query String.
         stringPrologQuery = 'compile_and_run_brewless(' + '\''.join(tokens)
         stringPrologQuery = stringPrologQuery + ")."
-        
+
         compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
 
     except:
@@ -47,7 +47,7 @@ def testbrewless():
         tokens = brewlessLexer.lex(stringFileContents)
 
         # Create a Prolog predicate query String.
-        stringPrologQuery = 'compile_and_run_brewless(' + ' '.join(tokens)
+        stringPrologQuery = 'compile_and_run_brewless(' + '\''.join(tokens)
         stringPrologQuery = stringPrologQuery + ")."
 
         compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
