@@ -32,3 +32,7 @@ Milestone 2 Planning
 Boan Li
 -Create powerpoint to presentation of the explanation of the language.
 -Create prolog based on DCG to test language.
+
+James Thayer
+- Created and completed Lexical analyzer to tokenize input through a lexer
+- Created sample code to run through the program
