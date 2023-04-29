@@ -20,9 +20,17 @@ def runBrewless():
 
         tokens = brewlessLexer.lex(stringFileContents)
 
+        stringOfTokens = '['
+        for token in tokens:
+           stringOfTokens = stringOfTokens + '\'' + token + '\','
+
+        if stringOfTokens.endswith(","):
+            stringOfTokens = stringOfTokens[:-1]
+
+        stringOfTokens = stringOfTokens + ']'
+
         # Create a Prolog predicate query String.
-        stringPrologQuery = 'compile_and_run_brewless(' + '\''.join(tokens)
-        stringPrologQuery = stringPrologQuery + ")."
+        stringPrologQuery = 'compile_and_run_brewless(' + stringOfTokens + ")."
 
         compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
 
