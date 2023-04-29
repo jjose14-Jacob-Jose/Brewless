@@ -1,4 +1,4 @@
-:- use_rendering(svgtree).
+%:- use_rendering(svgtree).
 :- table expr/3, term/3, bool/3.
 
 program(t_prog(B)) --> ['{'], block(B), ['}'].

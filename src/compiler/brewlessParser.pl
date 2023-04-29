@@ -40,7 +40,7 @@ value_eval(A, Env, _, Result) :- identifier_eval(A, Temp), lookup(_,Temp,Result,
 value_eval(A, _, _, Result) :- integer_eval(A, Result).
 value_eval(B, Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, Result).
 
-integer_eval(I, Result) :- atom_number(I, Result).
+integer_eval(I, Result) :- is_of_type(integer, I), Result is I.
 
 identifier_eval(I, Result) :- atom(I), Result = I.
 
