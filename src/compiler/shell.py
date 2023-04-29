@@ -1,5 +1,6 @@
 import brewlessLexer
 
+#expression meant for testing
 code = '''
 if (a == b) {
   print("a and b are equal")
@@ -23,6 +24,7 @@ for (int i = 0; i < 5; i++) {
 }
 '''
 
+#return tokens/input while running
 while True:
     text = input('brewless > ')
     tokens = brewlessLexer.lex(text)
