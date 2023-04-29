@@ -28,10 +28,4 @@ TBD
 
 
 ----------------------------------------------------
-### brewlessInterpreter.py (running)
-Format:
-python3 brewlessInterpreter.py <path_to_prolog_file.pl> <prolog_query> <output_variable_name>
-
-Example
-python3 brewlessInterpreter.py assignSemantics.pl "execute_program([begin, var, z, ; , var, x, ;, z, :=, x, end, .], Z)." "Z"
 
