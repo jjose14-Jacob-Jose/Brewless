@@ -28,3 +28,7 @@ Milestone 2 Planning
 - Create a runtime enviornement using Python to check semantics and run the brewless programs.
 - Create a powerpoint presentation of the explanation of the language.
 - Create a youtbe video explaining the language with the power point.
+
+Boan Li
+-Create powerpoint to presentation of the explanation of the language.
+-Create prolog based on DCG to test language.
