@@ -1,5 +1,6 @@
 {
+  int count;
   for (int i = 10; i > 0; i--) {
-    print(i);
+    count = 10;
   };
 }
