@@ -1,4 +1,4 @@
-program(P) --> block(P).
+program(P) --> "{", block(P), "}".
 
 block([C|B]) --> command(C), ";", block(B).
 block([C]) --> command(C).
@@ -13,17 +13,18 @@ type(boolean) --> "boolean".
 
 assignment(assign(I, E)) --> identifier(I), "=", expression(E).
 
-expression(E) --> arith_expression(E).
-expression(E) --> ["("], arith_expression(E), [")"].
-expression(E) --> boolean_expression(E).
+expression(E) --> term(E).
+expression(add(E1, E2)) --> term(E1), "+", expression(E2).
+expression(sub(E1, E2)) --> term(E1), "-", expression(E2).
 
-arith_expression(E) --> simple_expression(E).
-arith_expression(add(E1, E2)) --> simple_expression(E1), "+", expression(E2).
-arith_expression(sub(E1, E2)) --> simple_expression(E1), "-", expression(E2).
-arith_expression(mul(E1, E2)) --> simple_expression(E1), "*", expression(E2).
-arith_expression(div(E1, E2)) --> simple_expression(E1), "/", expression(E2).
+term(T) --> paren(T).
+term(mul(T1, T2)) --> paren(T1), "*", term(T2).
+term(div(T1, T2)) --> paren(T1), "/", term(T2).
 
-simple_expression(E) --> identifier(E) | integer(E) | string(E) | boolean(E).
+paren(P) --> ["("], expression(P), [")"].
+paren(P) --> value(P).
+
+value(V) --> identifier(V) | integer(V) | string(V) | boolean(V).
 
 integer(I) --> digit(D), integer(I2), { atom_concat(D, I2, I) }.
 integer(I) --> digit(I).
@@ -36,13 +37,14 @@ boolean(true) --> "true".
 boolean(false) --> "false".
 
 boolean_expression(E) --> simple_boolean(E).
-boolean_expression(eq(E1, E2)) --> arith_expression(E1), "==", arith_expression(E2).
+boolean_expression(eq(E1, E2)) --> expression(E1), "==", expression(E2).
 boolean_expression(not(B)) --> "not", "(", simple_boolean(B), ")".
 boolean_expression(and(B1, B2)) --> simple_boolean(B1), "and", simple_boolean(B2).
 boolean_expression(or(B1, B2)) --> simple_boolean(B1), "or", simple_boolean(B2).
+boolean_expression(lt(E1, E2)) --> expression(E1), "<", expression(E2).
+boolean_expression(gt(E1, E2)) --> expression(E1), ">", expression(E2).
 
 simple_boolean(B) --> boolean(B).
-
 
 string(string(S)) --> "\"", identifier(S), "\"".
 
@@ -51,13 +53,13 @@ conditional(if_else(B, P1, P2)) --> "if", "(", boolean_expression(B), ")", "{", 
 
 ternary(ternary(B, E1, E2)) --> boolean_expression(B), "?", expression(E1), ":", expression(E2).
 
-for_loop(for(A, B, LU, P)) --> "for", "(", assignment(A), ";", boolean_expression(B), ";", loop_update(LU), ")", "{", block(P), "}".
+for_loop(for(A, B, LU, P)) --> "for", "(", declaration(A), ";", boolean_expression(B), ";", loop_update(LU), ")", "{", block(P), "}".
 for_loop(for_in(I, R1, R2, P)) --> "for", "(", identifier(I), "in", "Range", "(", integer(R1), ",", integer(R2), ")", ")", "{", block(P), "}".
 
-while_loop(while(B, P)) --> "while", "(", boolean_expression(B), ")", "{", block(P), "}".
+while_loop(while(B, P)) --> "while", "(", boolean_expression(B"), ")", "{", block(P), "}".
 while_loop(do_while(P, B)) --> "do", "{", block(P), "}", "while", "(", boolean_expression(B), ")".
 
-loop_update(LU) --> assignment(LU) | increment(LU) | decrement(LU).
+loop_loop_update(LU) --> assignment(LU) | increment(LU) | decrement(LU).
 increment(inc_pre(I)) --> "++", identifier(I).
 increment(inc_post(I)) --> identifier(I), "++".
 decrement(dec_pre(I)) --> "--", identifier(I).
