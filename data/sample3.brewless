@@ -1,1 +1,10 @@
-
+{
+   int n = 9
+   boolean five
+   
+   for (i = 0; i < 5; i++) {
+      i == 5 ? five = true : five = false
+   }
+   
+   print(five)
+}
