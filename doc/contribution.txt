@@ -21,10 +21,20 @@ James Thayer
 - Began implementing/describing Design of language.
 
 
-Milestone 2 Planning
+Milestone 2 Contribution
 
-- Create a lexical analyzer for the parser.
-- Create a parsing tool that utilizes the made grammar.
-- Create a runtime enviornement using Python to check semantics and run the brewless programs.
-- Create a powerpoint presentation of the explanation of the language.
-- Create a youtbe video explaining the language with the power point.
+Jacob Jose
+-
+
+Michael Kangas
+-
+
+Boan Li
+-
+
+Tahir Pervez
+- Implemented the DCG.
+- Helped with powerpoint.
+
+James Thayer
+-
