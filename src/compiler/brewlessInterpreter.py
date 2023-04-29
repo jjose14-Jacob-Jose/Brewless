@@ -1,3 +1,5 @@
+import traceback
+
 from pyswip import Prolog
 
 import sys
@@ -9,6 +11,7 @@ MSG_ERROR_WHILE_RUNNING_PROLOG = "There was an error while executing the program
 def runBrewless():
     # Get the command line arguments
     listCommandLineArguments = sys.argv
+
 
     try:
         # Read contents of Brewless program to a String.
@@ -29,12 +32,19 @@ def runBrewless():
 
         stringOfTokens = stringOfTokens + ']'
 
+
+
+
         # Create a Prolog predicate query String.
-        stringPrologQuery = 'compile_and_run_brewless(' + stringOfTokens + ")."
+        stringPrologQuery = 'compile_and_run_brewless(' + stringOfTokens + ", Environment)."
 
-        compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
+        # print("****************" + stringPrologQuery)
 
-    except:
+        compileTokens("brewlessCompiler.pl", stringPrologQuery, False)
+
+    except Exception as exception:
+        exception_stack_trace = traceback.format_exc()
+        print(exception_stack_trace)
         print(MSG_MISSING_COMMAND_LINE_ARGUMENTS)
 
 
@@ -64,10 +74,10 @@ def testbrewless():
         stringOfTokens = stringOfTokens + ']'
 
         # Create a Prolog predicate query String.
-        stringPrologQuery = 'compile_and_run_brewless(' + stringOfTokens + ")."
+        stringPrologQuery = 'compile_and_run_brewless(' + stringOfTokens + ", Environment)."
 
 
-        compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
+        compileTokens("brewlessCompiler.pl", stringPrologQuery, False)
 
     except:
         print(MSG_MISSING_COMMAND_LINE_ARGUMENTS)
@@ -99,6 +109,8 @@ def compileTokens(prologFilePath, prologCommandOrQuery, prologOutputVariable):
         # Call the Prolog predicate.
         listPrologResults = prolog.query(prologCommandOrQuery)
 
+
+
         # Return Prolog query result.
         # Prolog query result had multiple instances of same value. Set 'flagGetAllResults' as 'false' to get only first value.
         flagGetAllResults = False
@@ -112,7 +124,7 @@ def compileTokens(prologFilePath, prologCommandOrQuery, prologOutputVariable):
 def getPrologQuery(listPrologResults, prologOutputVariable, flagGetAllResults):
     list_results = []
     for prologResult in listPrologResults:
-        list_results.append(prologResult[prologOutputVariable])
+        # list_results.append(prologResult[prologOutputVariable])
 
         # Return only first result if 'flagGetAllResults' is false.
         if not flagGetAllResults:
@@ -121,7 +133,7 @@ def getPrologQuery(listPrologResults, prologOutputVariable, flagGetAllResults):
 
 
 def main():
-    testbrewless()
+    runBrewless()
 
 
 if __name__ == "__main__":

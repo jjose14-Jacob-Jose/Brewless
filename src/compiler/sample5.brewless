@@ -1,0 +1,7 @@
+{
+  int i = 3;
+  for (c in Range (2,7)) {
+      print ( i );
+      i = i + 1 
+  } ;
+}
