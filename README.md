@@ -1,8 +1,15 @@
 # SER502-Group2
 SER 502 SP2023 Group project
 
+# Contributors:
+Jacob Jose
+Michael Kangas
+James Thayer
+Tahir Pervez
+Boan Li
+
 # Build
-Built on ~~Windows~~ Ubuntu.
+Built on Windows/Linux for Linux(Ubuntu).
 
 # Tools
 Using python, lex, and DCG
@@ -17,15 +24,16 @@ Following must be installed in Ubuntu to call Prolog from Python.
 5.   pip install pyswip
 
 # Running
-TBD
+python3 brewlessInterpreter.py <Brewless_Program_name>.brewless
+- Files run in this way must be in same folder, copies included in submission for convenience 
+- MUST be run on linux(Specifically Ubuntu), as program requires pyswip which does not work on windows.
+- These files are all in the src/Interpreter folder
+- Sample Files are also in the data folder, and path can be included to reach both folders to run
 
 # Scripts
-Build compiler: TBD
-Runs at runtime: TBD
+Build compiler: Yes
+Runs at runtime: Yes
 
 # Youtube
-TBD
-
-
-----------------------------------------------------
+https://youtu.be/SixBx725sd8
 
