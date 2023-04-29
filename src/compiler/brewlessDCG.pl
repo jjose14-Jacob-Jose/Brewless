@@ -20,7 +20,7 @@ dec(t_dec_ass(T,A)) --> type(T), assign(A).
 
 type(t_type_int(int)) --> ['int'].
 type(t_type_string(string)) --> ['String'].
-type(t_type_bool(bool)) --> ['bool'].
+type(t_type_bool(bool)) --> ['boolean'].
 
 assign(t_assign(I,E)) --> ident(I), ['='], expr(E).
 
