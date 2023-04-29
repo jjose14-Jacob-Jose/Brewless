@@ -1,20 +1,5 @@
 {
-   int factorial
-   int n = 9
-   int index
-
-   index = 1
-
-   int temp = 0
-
-   while(index == n)
-   {
-       temp = temp * index
-       index++
-   }
-   factorial = index
-
-   String result = "FactorialResultIs"
-   print(result)
-   print(factorial)
+  for (int i = 0; i < 10; i++) {
+    print(i);
+  };
 }

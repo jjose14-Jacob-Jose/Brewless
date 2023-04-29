@@ -133,11 +133,11 @@ def getPrologQuery(listPrologResults, prologOutputVariable, flagGetAllResults):
 
 
 def main():
-    testbrewless()
+    runBrewless()
 
 
 if __name__ == "__main__":
-    testbrewless()
+    main()
 
 
 # To run this class from Ubuntu Terminal:
