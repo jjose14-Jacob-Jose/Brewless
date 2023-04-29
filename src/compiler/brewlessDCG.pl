@@ -32,11 +32,11 @@ term(t_divide(A, B)) --> term(A), ['/'], paren(B).
 term(A) --> paren(A).
 paren(t_paren(A)) --> ['('], expr(A), [')'].
 paren(A) --> value(A).
-value(A) --> ident(A) | int(A) | string(A) | bool(A).
+value(A) --> ident(A) | int(A) | str(A) | bool(A).
 
 int(I) --> [I], {is_of_type(integer, I)}.
 
-ident(I) --> [I], {is_of_type(string, I)}.
+ident(I) --> [I], {atom(I)}.
 
 bool(t_bool_true(true)) --> ['true'].
 bool(t_bool_false(false)) --> ['false'].
@@ -47,7 +47,7 @@ bool(t_bool_or(B1,B2)) --> bool(B1), ['or'], bool(B2).
 bool(t_bool_lt(I1,I2)) --> expr(I1), ['<'], expr(I2).
 bool(t_bool_gt(I1,I2)) --> expr(I1), ['>'], expr(I2).
 
-string(t_str(I1, I2)) --> ['String'], ident(I1), ['='], ident(I2).
+str(t_str(I1, I2)) --> ['String'], ident(I1), ['='], ident(I2).
 
 cond(t_if(B1,B2)) --> 
     ['if'], ['('], bool(B1), [')'], 
