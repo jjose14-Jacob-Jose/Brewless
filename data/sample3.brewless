@@ -3,13 +3,13 @@
     int y = 10;
     int z = 10;
     
-    if (x > y) {print("x is greater than y");}
+    if (x > y) {print(x);}
     
-    if (x < y) {print("x is less than y");}
+    if (x < y) {print(y);}
     
     if (z == y) {
-        print("z and y are equivalent");
+        print(z);
     } else {
-        print("z and y arent equivalent") ;
+        print(y) ;
     }
 }
