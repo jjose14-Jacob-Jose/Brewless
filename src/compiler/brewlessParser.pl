@@ -21,10 +21,10 @@ type_eval(t_type_boolean('boolean'), boolean).
 assign_eval(t_assign(I,E), Env, OutEnv, Type) :- identifier_eval(I, Identifier), expression_eval(E, Env, _, Value), update(Type, Identifier, Value, Env, OutEnv).
 assign_eval(t_assign(I,E), Env, OutEnv) :- identifier_eval(I, Identifier), expression_eval(E, Env, _, Value), lookup(Type, Identifier, _, Env), update(Type, Identifier, Value, Env, OutEnv).
 
-expression_eval(I, Env, _, Result) :- identifier_eval(I, Temp), lookup(_,Temp,Result,Env).
-expression_eval(I, _, _, Result) :- integer_eval(I, Result).
-expression_eval(S, _, _, Result) :- string_eval(S, Result).
-expression_eval(B, Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, Result).
+%expression_eval(I, Env, _, Result) :- identifier_eval(I, Temp), lookup(_,Temp,Result,Env).
+%expression_eval(I, _, _, Result) :- integer_eval(I, Result).
+%expression_eval(S, _, _, Result) :- string_eval(S, Result).
+%expression_eval(B, Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, Result).
 expression_eval(t_plus(A,B), Env, OutEnv, Result) :- expression_eval(A, Env, OutEnv, Temp1), term_eval(B, Env, OutEnv, Temp2), Result is Temp1 + Temp2.
 expression_eval(t_minus(A,B), Env, OutEnv, Result) :- expression_eval(A, Env, OutEnv, Temp1), term_eval(B, Env, OutEnv, Temp2), Result is Temp1 - Temp2.
 expression_eval(A, Env, OutEnv, Result) :- term_eval(A, Env, OutEnv, Result).
@@ -38,6 +38,7 @@ paren_eval(A, Env, OutEnv, Result) :- value_eval(A, Env, OutEnv, Result).
 
 value_eval(A, Env, _, Result) :- identifier_eval(A, Temp), lookup(_,Temp,Result,Env).
 value_eval(A, _, _, Result) :- integer_eval(A, Result).
+value_eval(B, Env, OutEnv, Result) :- bool_eval(B, Env, OutEnv, Result).
 
 integer_eval(I, Result) :- atom_number(I, Result).
 
