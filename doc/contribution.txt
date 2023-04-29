@@ -29,10 +29,24 @@ Milestone 2 Planning
 - Create a powerpoint presentation of the explanation of the language.
 - Create a youtbe video explaining the language with the power point.
 
+Milestone 2 Contributions
+
 Boan Li
 -Create powerpoint to presentation of the explanation of the language.
--Create prolog based on DCG to test language.
+-Create prolog based on DCG to test language, created sample code to run through the language
 
 James Thayer
 - Created and completed Lexical analyzer to tokenize input through a lexer
-- Created sample code to run through the program
+- Created sample code to run through the program and debugged
+
+Michael Kangas
+- Created and completed the Parser to run throug the parse tree and produce an output for the program.
+- Created sample code to run through the program and debugged
+
+Tahir Pervez
+- Created and Completed the DCG to parse the tokens and produce an output
+- Created sample code to run through the program and debugged
+
+Jacob Jose
+- Created and Completed the Interpreter to run the whole program from text files and produce a console based output
+- Created sample code and assisted with debugging
