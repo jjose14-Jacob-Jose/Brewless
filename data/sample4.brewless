@@ -2,7 +2,9 @@
   int a;
   if (false) {
     a = 5;
+    print(a);
   } else {
     a = 3;
+    print(a);
   };
 }
