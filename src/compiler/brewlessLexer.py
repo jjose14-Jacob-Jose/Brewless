@@ -82,7 +82,7 @@ def lex(expression):
         elif token_type == ASSIGN:
             tokens.append((token_value))
         elif token_type == VARIABLE:
-            tokens.append(('"' + (token_value) + '"'))
+            tokens.append(((token_value)))
         elif token_type != COMMENT:
             tokens.append((token_value))
         else:
