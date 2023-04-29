@@ -18,8 +18,36 @@ def runBrewless():
             for fileLine in file:
                 stringFileContents += fileLine
 
+        tokens = brewlessLexer.lex(stringFileContents)
+
         # Create a Prolog predicate query String.
-        stringPrologQuery = "compile_and_run_brewless(" + stringFileContents
+        stringPrologQuery = "compile_and_run_brewless(" + tokens + ")."
+
+        compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
+
+    except:
+        print(MSG_MISSING_COMMAND_LINE_ARGUMENTS)
+
+
+def testbrewless():
+    # Get the command line arguments
+    # listCommandLineArguments = sys.argv
+
+    try:
+        # Read contents of Brewless program to a String.
+        # brewlessFileName = listCommandLineArguments[1]
+        brewlessFilename = "sample2.brewless"
+        stringFileContents = ""
+        with open(brewlessFilename, 'r') as file:
+            for fileLine in file:
+                stringFileContents += fileLine
+
+        # Create a Prolog predicate query String.
+        tokens = brewlessLexer.lex(stringFileContents)
+
+        # Create a Prolog predicate query String.
+        stringPrologQuery = 'compile_and_run_brewless(' + ' '.join(tokens)
+        stringPrologQuery = stringPrologQuery + ")."
 
         compileTokens("brewlessDCGParserWrapper.pl", stringPrologQuery, False)
 
@@ -75,7 +103,7 @@ def getPrologQuery(listPrologResults, prologOutputVariable, flagGetAllResults):
 
 
 def main():
-    print(getCommandLineArgumentsAndCompileTokens())
+    testbrewless()
 
 
 if __name__ == "__main__":
